@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
         if (editMode)
         {
             modeText.text = "Mode: Edit";
-            controlHintsText.text = "TAB - Edit Mode; WASD - Move; Space - Jump; UP/DOWN - Elevate Transport";
+            controlHintsText.text = "Tab - Edit Mode; WASD - Move; Space - Jump; Up/Down- Elevate Transport; Esc - Cancel placement";
 
             // Rotate camera
             Vector2 value = lookAction.ReadValue<Vector2>() * lookSpeed;
@@ -343,7 +343,7 @@ public class Player : MonoBehaviour
         else
         {
             modeText.text = "Mode: Play";
-            controlHintsText.text = "TAB - Exit Edit Mode; WASD - Move";
+            controlHintsText.text = "TAB - Exit Play Mode; WASD - Move";
             Vector3 corePos = transport.core.transform.position;
             cam.transform.position = new Vector3(corePos.x, corePos.y + 2, corePos.z - 5);
             cam.transform.LookAt(corePos);
