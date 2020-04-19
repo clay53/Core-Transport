@@ -3,18 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Part : MonoBehaviour
+public abstract class Part : MonoBehaviour
 {
     public string title;
-    public GameObject[] snapPoints;
+    public List<GameObject> snapPoints = new List<GameObject>();
     public bool snapPointSelected1 = false;
     public bool snapPointSelected2 = false;
     public GameObject selectedSnapPoint;
-    private Player player;
+    public Player player;
+    public List<PartConnection> connections = new List<PartConnection>();
+    public List<GameObject> collidingGameObjects = new List<GameObject>();
 
     public void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        foreach (SnapPoint snapPoint in transform.GetComponentsInChildren<SnapPoint>())
+        {
+            snapPoints.Add(snapPoint.gameObject);
+        }
     }
 
     public void Update()
@@ -30,12 +36,51 @@ public class Part : MonoBehaviour
                 snapPointScript.SetView(true, snapPointSelected1 ? SnapPoint.SnapPointMaterials.selected1Material : SnapPoint.SnapPointMaterials.selected2Material);
             } else if (!snapPointSelected1 && !snapPointSelected2)
             {
-                Debug.Log(snapPointScript.lookingAt);
                 snapPointScript.SetView(snapPointScript.lookingAt, SnapPoint.SnapPointMaterials.baseMaterial);
             } else
             {
                 snapPointScript.SetView(false, SnapPoint.SnapPointMaterials.baseMaterial);
             }
         }
+    }
+
+    public ContiguousParts GetContiguousParts()
+    {
+        return transform.GetComponentInParent<ContiguousParts>();
+    }
+
+    public bool Intersects(ContiguousParts parts)
+    {
+        return collidingGameObjects.Contains(parts.gameObject) || parts.collidingGameObjects.Contains(gameObject);
+    }
+
+    public bool Intersects (Part part)
+    {
+        return collidingGameObjects.Contains(part.gameObject) || part.collidingGameObjects.Contains(gameObject);
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        collidingGameObjects.Add(col.gameObject);
+    }
+
+    void OnCollisionExit(Collision col)
+    {
+        collidingGameObjects.Remove(col.gameObject);
+    }
+
+    public abstract void OnMove(Vector2 axis);
+}
+
+public class PartConnection
+{
+    public GameObject snapPoint1;
+    public GameObject SnapPoint2;
+    public Vector3 angle;
+
+    public PartConnection(GameObject snapPoint1, GameObject snapPoint2, Vector3 angle)
+    {
+        this.snapPoint1 = snapPoint1;
+        this.SnapPoint2 = snapPoint2;
     }
 }

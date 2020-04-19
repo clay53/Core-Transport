@@ -29,7 +29,7 @@ public class SnapPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        lookingAt = player.lookingAtSnapPoint == gameObject;
+        lookingAt = player.lookingAt == gameObject;
         selected1 = player.selectedSnapPoint1 == gameObject;
         selected2 = player.selectedSnapPoint2 == gameObject;
     }
@@ -51,5 +51,10 @@ public class SnapPoint : MonoBehaviour
             default:
                 throw new System.ArgumentException();
         }
+    }
+
+    public Part GetPart()
+    {
+        return transform.GetComponentInParent<Part>();
     }
 }
