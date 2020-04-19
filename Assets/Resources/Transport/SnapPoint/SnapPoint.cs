@@ -9,6 +9,15 @@ public class SnapPoint : MonoBehaviour
     public Material baseMaterial;
     public Material selected1Material;
     public Material selected2Material;
+    public enum SnapPointMaterials
+    {
+        baseMaterial,
+        selected1Material,
+        selected2Material
+    }
+    public bool lookingAt = false;
+    public bool selected1 = false;
+    public bool selected2 = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +29,27 @@ public class SnapPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool lookingAt = player.lookingAtSnapPoint == gameObject;
-        bool selected1 = player.selectedSnapPoint1 == gameObject;
-        bool selected2 = player.selectedSnapPoint2 == gameObject;
-        renderer.enabled = (lookingAt || selected1 || selected2);
-        renderer.material = selected1 ? selected1Material : (selected2 ? selected2Material : baseMaterial);
+        lookingAt = player.lookingAtSnapPoint == gameObject;
+        selected1 = player.selectedSnapPoint1 == gameObject;
+        selected2 = player.selectedSnapPoint2 == gameObject;
+    }
+
+    public void SetView(bool visible, SnapPointMaterials material)
+    {
+        renderer.enabled = visible;
+        switch (material)
+        {
+            case SnapPointMaterials.baseMaterial:
+                renderer.material = baseMaterial;
+                break;
+            case SnapPointMaterials.selected1Material:
+                renderer.material = selected1Material;
+                break;
+            case SnapPointMaterials.selected2Material:
+                renderer.material = selected2Material;
+                break;
+            default:
+                throw new System.ArgumentException();
+        }
     }
 }

@@ -10,6 +10,16 @@ public class Player : MonoBehaviour
     public float editorStandingAccelerationSpeed = 0.5f;
     public Vector2 moveAxis = new Vector2(0, 0);
 
+    public InputAction jumpAction;
+    public float jumpPower = 5;
+
+    public enum Tool
+    {
+        Select,
+        Place
+    }
+    public Tool currentTool = Tool.Select;
+
     public InputAction lookAction;
     public float lookSpeed = 0.2f;
     public GameObject lookingAtSnapPoint;
@@ -17,9 +27,6 @@ public class Player : MonoBehaviour
     public InputAction selectAction;
     public GameObject selectedSnapPoint1;
     public GameObject selectedSnapPoint2;
-
-    public InputAction jumpAction;
-    public float jumpPower = 5;
 
     public GameObject editorPlayer;
     Rigidbody editorPlayerBody;
@@ -33,9 +40,9 @@ public class Player : MonoBehaviour
         editorPlayerBody = editorPlayer.GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         moveAction.Enable();
+        jumpAction.Enable();
         lookAction.Enable();
         selectAction.Enable();
-        jumpAction.Enable();
     }
 
     void Update()
@@ -66,21 +73,27 @@ public class Player : MonoBehaviour
             editorPlayerBody.velocity = nV;
 
             // SnapPoints
-            int layerMask = 1 << 9;
-            RaycastHit hitInfo;
-            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, Mathf.Infinity, layerMask))
+            if (currentTool == Tool.Select)
             {
-                lookingAtSnapPoint = hitInfo.collider.gameObject;
-                if (selectAction.ReadValue<float>() > 0 && selectedSnapPoint1 == null)
+                int layerMask = 1 << 9;
+                RaycastHit hitInfo;
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, Mathf.Infinity, layerMask))
                 {
-                    selectedSnapPoint1 = lookingAtSnapPoint;
-                } else if (selectAction.ReadValue<float>() > 0 && selectedSnapPoint1 != lookingAtSnapPoint && selectedSnapPoint2 == null)
-                {
-                    selectedSnapPoint2 = lookingAtSnapPoint;
+                    lookingAtSnapPoint = hitInfo.collider.gameObject;
+                    if (selectAction.ReadValue<float>() > 0 && selectedSnapPoint1 == null && lookingAtSnapPoint.GetComponent<MeshRenderer>().enabled)
+                    {
+                        selectedSnapPoint1 = lookingAtSnapPoint;
+                    }
+                    else if (selectAction.ReadValue<float>() > 0 && selectedSnapPoint1 != lookingAtSnapPoint && selectedSnapPoint2 == null && lookingAtSnapPoint.GetComponent<MeshRenderer>().enabled)
+                    {
+                        selectedSnapPoint2 = lookingAtSnapPoint;
+                        currentTool = Tool.Place;
+                    }
                 }
-            } else
-            {
-                lookingAtSnapPoint = null;
+                else
+                {
+                    lookingAtSnapPoint = null;
+                }
             }
         }
         else
