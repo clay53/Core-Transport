@@ -12,6 +12,7 @@ public class PlayerWinArea : MonoBehaviour
         Debug.Log(col.gameObject.name + " - " + col.tag);
         if (col.tag == "Part" && col.transform.parent.tag == "Player")
         {
+            Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene(sceneName);
         }
     }
