@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     public InputAction switchModeAction;
+    public bool switchedLastUpdate;
 
     public InputAction moveAction;
     public float editorMoveSpeed = 2f;
@@ -47,6 +49,8 @@ public class Player : MonoBehaviour
     public GameObject selectedSnapPoint1;
     public GameObject selectedSnapPoint2;
 
+    public InputAction resetAction;
+
     public GameObject editorPlayer;
     Rigidbody editorPlayerBody;
 
@@ -63,7 +67,6 @@ public class Player : MonoBehaviour
         editorPlayerBody = editorPlayer.GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
 
-        switchModeAction.performed += _ => SwitchMode();
         switchModeAction.Enable();
         moveAction.Enable();
         jumpAction.Enable();
@@ -96,16 +99,46 @@ public class Player : MonoBehaviour
         placeRotateZAction.Enable();
         cancelPlaceAction.Enable();
         placeAction.Enable();
+        resetAction.Enable();
     }
 
     void Update()
     {
+        if (!switchedLastUpdate && switchModeAction.ReadValue<float>() > 0)
+        {
+            if (editMode) // Switching to play mode
+            {
+                editorPlayer.SetActive(false);
+                transport.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            }
+            else
+            {
+                transport.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                Vector3 corePos = transport.core.transform.position;
+                editorPlayer.transform.position = new Vector3(corePos.x, corePos.y + 10, corePos.z);
+                editorPlayer.transform.rotation = Quaternion.Euler(0, 0, 0);
+                editorPlayer.SetActive(true);
+            }
+            editMode = !editMode;
+            switchedLastUpdate = true;
+        } else if (switchModeAction.ReadValue<float>() == 0)
+        {
+            switchedLastUpdate = false;
+        }
+
+        // Reset Game
+        if (resetAction.ReadValue<float>() > 0)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene("Menu");
+        }
+
         infoText.text = "";
         infoText.color = Color.grey;
         if (editMode)
         {
             modeText.text = "Mode: Edit";
-            controlHintsText.text = "Tab - Edit Mode; WASD - Move; Space - Jump; Up/Down- Elevate Transport; Esc - Cancel placement";
+            controlHintsText.text = "Tab - Edit Mode; F5 - Reset Game; WASD - Move; Space - Jump; Up/Down- Elevate Transport; Esc - Cancel placement";
 
             // Rotate camera
             Vector2 value = lookAction.ReadValue<Vector2>() * lookSpeed;
@@ -350,23 +383,5 @@ public class Player : MonoBehaviour
 
             transport.OnMoveAxis(moveAction.ReadValue<Vector2>());
         }
-    }
-
-    public void SwitchMode()
-    {
-        if (editMode) // Switching to play mode
-        {
-            editorPlayer.SetActive(false);
-            transport.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        }
-        else
-        {
-            transport.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            Vector3 corePos = transport.core.transform.position;
-            editorPlayer.transform.position = new Vector3(corePos.x, corePos.y + 10, corePos.z);
-            editorPlayer.transform.rotation = Quaternion.Euler(0, 0, 0);
-            editorPlayer.SetActive(true);
-        }
-        editMode = !editMode;
     }
 }

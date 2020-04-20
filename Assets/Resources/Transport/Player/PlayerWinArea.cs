@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerWinArea : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public string sceneName;
 
-    // Update is called once per frame
-    void Update()
+    public void OnTriggerEnter(Collider col)
     {
-        
+        Debug.Log(col.gameObject.name + " - " + col.tag);
+        if (col.tag == "Part" && col.transform.parent.tag == "Player")
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }

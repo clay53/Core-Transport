@@ -11,7 +11,6 @@ public class Rocket : Part
     {
         if (moveAxis.y > 0)
         {
-            Debug.Log(moveAxis);
             GetComponentInParent<Rigidbody>().AddForceAtPosition(-transform.up * force * Time.deltaTime, transform.position);
         }
     }
