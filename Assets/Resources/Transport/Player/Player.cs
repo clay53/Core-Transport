@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
         if (resetAction.ReadValue<float>() > 0)
         {
             Cursor.lockState = CursorLockMode.None;
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         infoText.text = "";
