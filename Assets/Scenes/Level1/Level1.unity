@@ -1643,7 +1643,7 @@ PrefabInstance:
     - target: {fileID: -7808381318373605236, guid: 425d6c6ad107d824db5f0837c4343e24,
         type: 3}
       propertyPath: m_Intensity
-      value: 3.1415927
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: -7808381318373605236, guid: 425d6c6ad107d824db5f0837c4343e24,
         type: 3}
@@ -2403,113 +2403,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebb611146b3ef4649a4ffe606b3decb1, type: 3}
---- !u!1 &2079484414 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -8684251187902555887, guid: 425d6c6ad107d824db5f0837c4343e24,
-    type: 3}
-  m_PrefabInstance: {fileID: 1472976626}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2079484417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2079484414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6c2871f720b2af4e9210febdac74517, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 1
-  shadowResolution: 512
-  shadowDimmer: 1
-  volumetricShadowDimmer: 1
-  shadowFadeDistance: 10000
-  contactShadows: 0
-  shadowTint: {r: 0, g: 0, b: 0, a: 1}
-  viewBiasMin: 0.2
-  viewBiasMax: 100
-  viewBiasScale: 1
-  normalBiasMin: 0.5
-  normalBiasMax: 0.5
-  normalBiasScale: 1
-  sampleBiasScale: 0
-  edgeLeakFixup: 0
-  edgeToleranceNormal: 1
-  edgeTolerance: 1
-  shadowCascadeCount: 4
-  shadowCascadeRatios:
-  - 0.05
-  - 0.2
-  - 0.3
-  shadowCascadeBorders:
-  - 0.2
-  - 0.2
-  - 0.2
-  - 0.2
-  shadowAlgorithm: 0
-  shadowVariant: 0
-  shadowPrecision: 0
---- !u!114 &2079484418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2079484414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 5
-  m_Version: 5
-  directionalIntensity: 3.1415927
-  punctualIntensity: 600
-  areaIntensity: 200
-  enableSpotReflector: 0
-  luxAtDistance: 1
-  m_InnerSpotPercent: 0
-  lightDimmer: 1
-  m_VolumetricDimmer: 1
-  lightUnit: 2
-  fadeDistance: 10000
-  affectDiffuse: 1
-  affectSpecular: 1
-  nonLightmappedOnly: 0
-  lightTypeExtent: 0
-  m_SpotLightShape: 0
-  shapeWidth: 0.5
-  shapeHeight: 0.5
-  aspectRatio: 1
-  shapeRadius: 0
-  maxSmoothness: 0.99
-  applyRangeAttenuation: 1
-  useOldInspector: 0
-  useVolumetric: 1
-  featuresFoldout: 1
-  showAdditionalSettings: 0
-  displayLightIntensity: 3.1415927
-  displayAreaLightEmissiveMesh: 0
-  areaLightCookie: {fileID: 0}
-  areaLightShadowCone: 120
-  useScreenSpaceShadows: 0
-  evsmExponent: 15
-  evsmLightLeakBias: 0
-  evsmVarianceBias: 0.00001
-  evsmBlurPasses: 0
-  lightLayers: 1
-  lightlayersMask: 1
-  linkShadowLayers: 1
-  shadowNearPlane: 0.1
-  shadowSoftness: 0.5
-  blockerSampleCount: 24
-  filterSampleCount: 16
-  minFilterSize: 0.00001
-  kernelSize: 5
-  lightAngle: 1
-  maxDepthBias: 0.001
 --- !u!1001 &2114923436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2667,7 +2560,9 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1314104394, guid: 5c6f4d4b176ba9a47a58da9d15fe5c7b, type: 3}
+    - {fileID: 1314104393, guid: 5c6f4d4b176ba9a47a58da9d15fe5c7b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5c6f4d4b176ba9a47a58da9d15fe5c7b, type: 3}
 --- !u!1001 &3287411206268187858
 PrefabInstance:
@@ -2879,7 +2774,9 @@ PrefabInstance:
       propertyPath: sceneName
       value: Level2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2028214899073264131, guid: 0938bc024d9b7fd4d907831cce88c45e, type: 3}
+    - {fileID: 5141214798703891670, guid: 0938bc024d9b7fd4d907831cce88c45e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0938bc024d9b7fd4d907831cce88c45e, type: 3}
 --- !u!1001 &3995600112918709771
 PrefabInstance:
@@ -3014,7 +2911,8 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1328190337, guid: 4a54344d0bb3a944086fab4c8f611580, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4a54344d0bb3a944086fab4c8f611580, type: 3}
 --- !u!1001 &6219863913579059802
 PrefabInstance:

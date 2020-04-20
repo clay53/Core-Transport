@@ -36,6 +36,10 @@ public class SnapPoint : MonoBehaviour
 
     public void SetView(bool visible, SnapPointMaterials material)
     {
+        if (!renderer)
+        {
+            renderer = GetComponent<MeshRenderer>();
+        }
         renderer.enabled = visible;
         switch (material)
         {
